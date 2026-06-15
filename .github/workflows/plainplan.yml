@@ -22,3 +22,4 @@ jobs:
         with:
           plan_file: plan.json
           # No api_key — public repo uses the free tier via OIDC.
+          fail_on_risk: HIGH   # gate: fail + red `plainplan` status on HIGH-risk plans
