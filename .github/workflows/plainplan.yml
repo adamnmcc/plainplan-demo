@@ -10,7 +10,9 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      pull-requests: write
+      pull-requests: write   # post the review comment
+      id-token: write        # free tier: prove repo is public via OIDC
+      statuses: write        # set the `plainplan` commit status (merge gate)
     steps:
       - name: Checkout
         uses: actions/checkout@v5
@@ -19,4 +21,5 @@ jobs:
         uses: adamnmcc/plainplan-action@v1
         with:
           plan_file: plan.json
-          api_key: ${{ secrets.PLAINPLAN_API_KEY }}
+          # No api_key — public repo uses the free tier via OIDC.
+          fail_on_risk: HIGH   # gate: fail + red `plainplan` status on HIGH-risk plans
