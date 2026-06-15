@@ -1,0 +1,22 @@
+name: PlainPlan Demo
+
+# Runs on every PR and posts a plain-English Terraform plan review as a comment.
+on:
+  pull_request:
+
+jobs:
+  analyze:
+    name: Analyze Terraform Plan
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Analyze with PlainPlan
+        uses: adamnmcc/plainplan-action@v1
+        with:
+          plan_file: plan.json
+          api_key: ${{ secrets.PLAINPLAN_API_KEY }}
